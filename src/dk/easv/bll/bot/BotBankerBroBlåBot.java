@@ -31,13 +31,14 @@ public class BotBankerBroBlåBot implements IBot {
     private IMove calculateWinningMove(IGameState state, int maxTimeMs){
         long time = System.currentTimeMillis();
         Random rand = new Random();
-        int count = 0;
+        //int count = 0;
         GameSimulator simulator = createSimulator(state);//Da vi i løkken starter uden at en game simulator er implementeret laver vi en.
         IGameState gs = simulator.getCurrentState();
         IMove randomMoveOpponent;
         IMove randomMovePlayer;
         int[] winnerNumberArray =new int[81];
         int winnerNumber=0;
+        boolean firstNumber=true;
 
 
         while (System.currentTimeMillis() < time + maxTimeMs) { // check how much time has passed, stop if over maxTimeMs
@@ -46,7 +47,7 @@ public class BotBankerBroBlåBot implements IBot {
             {
                 simulator = createSimulator(state);
                 gs = simulator.getCurrentState();
-                count=0;
+                firstNumber=true;
             }
 
             List<IMove> moves = gs.getField().getAvailableMoves(); //Her laves en liste
@@ -56,8 +57,11 @@ public class BotBankerBroBlåBot implements IBot {
             simulator.updateGame(randomMovePlayer); //update første spiller
 
 
-            if (count==0)
-                winnerNumber=number;
+              if (firstNumber)
+              {
+                  winnerNumber=number;
+                  firstNumber=false;
+              }
 
 
             if (simulator.getGameOver()==GameOverState.Win)
@@ -72,27 +76,24 @@ public class BotBankerBroBlåBot implements IBot {
 
             }
 
-            count++;
+                  }
 
-        }
-
-        int tal=0, selectedMove=0;
+        int number=0, selectedMove=0;
 
         for (int i = 0; i < winnerNumberArray.length; i++) {
 
-            if (winnerNumberArray[i]>=tal)
+            if (winnerNumberArray[i]>=number)
             {
-                tal=winnerNumberArray[i];
+                number=winnerNumberArray[i];
                 selectedMove=i;
             }
         }
 
-
         List<IMove> moves = state.getField().getAvailableMoves();
-        randomMovePlayer = moves.get(selectedMove);
+        IMove winnerMove = moves.get(selectedMove);
 
 
-        return randomMovePlayer; // just play randomly if solution not found
+        return winnerMove; // just play randomly if solution not found
     }
 
     /*
