@@ -22,6 +22,7 @@ public class butbut implements IBot{
 
         List<int[]> newPreferredMoves = new ArrayList<>();
         for (int[] move : preferredMoves) {
+
             if (!(move[0] == 0 && move[1] == 0) && !(move[0] == 0 && move[1] == 2) &&
                     !(move[0] == 2 && move[1] == 0) && !(move[0] == 2 && move[1] == 2)) {
                 newPreferredMoves.add(move);
@@ -50,31 +51,10 @@ public class butbut implements IBot{
 
     protected int[][] preferredMoves = {
             {1, 1}, //Center
-            {0, 0}, {2, 2}, {0, 2}, {2, 0},  //Corners ordered across
-            {0, 1}, {2, 1}, {1, 0}, {1, 2}}; //Outer Middles ordered across
+            {0, 1}, {2, 1}, {1, 0}, {1, 2},//Outer Middles ordered across
+            {0, 0}, {2, 2}, {0, 2}, {2, 0}}; //Corners ordered across
 
-    /*
-    @Override
-    public IMove doMove(IGameState state){
-        List<IMove> winMoves = getWinningMoves(state);
-        if(!winMoves.isEmpty()) {
-            return winMoves.get(0);
-        }
-            for (int[] move : preferredMoves) {
-                if (state.getField().getMacroboard()[move[0]][move[1]].equals(IField.AVAILABLE_FIELD)) {
-                    for (int[] selectedMove : preferredMoves) {
-                        int x = move[0] * 3 + selectedMove[0];
-                        int y = move[1] * 3 + selectedMove[0];
-                        if (state.getField().getBoard()[x][y].equals(IField.EMPTY_FIELD)) {
-                            return new Move(x, y);
-                        }
-                    }
-                }
-            }
 
-        return state.getField().getAvailableMoves().get(0);
-    }
-    */
 
     // Compile a list of all available winning moves
     private boolean isWinningMove(IGameState state, IMove move, String player){
