@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class BotBankerBroBlå implements IBot {
+public class BotBankerBroBlåBot implements IBot {
     final int moveTimeMs = 1000;
     private String BOT_NAME = getClass().getSimpleName();
 
